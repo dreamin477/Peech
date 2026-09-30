@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS Leech — Premium Link Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#04060c; --panel:#0a1120; --panel2:#0e172b; --line:#1a2a4d;
+  --ice:#6ff3ff; --plasma:#b06bff; --ok:#5dffb0; --warn:#ffc857; --bad:#ff5c7a;
+  --tx:#e6ecff; --mut:#7f8db3;
+  --disp:'Unbounded',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0}
+html{color-scheme:dark}
+body{background:var(--void);color:var(--tx);font:400 15px/1.55 var(--body);min-height:100vh;
+  background-image:radial-gradient(900px 500px at 78% -10%,rgba(176,107,255,.18),transparent 60%),radial-gradient(800px 500px at 5% 0%,rgba(111,243,255,.12),transparent 60%),
+  linear-gradient(rgba(111,243,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(111,243,255,.035) 1px,transparent 1px);
+  background-size:auto,auto,44px 44px,44px 44px;background-attachment:fixed}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
+.logo{font:700 18px var(--disp);letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border-radius:50%;border:2px solid var(--ice);box-shadow:0 0 14px var(--ice),inset 0 0 8px var(--plasma);display:inline-block}
+.acct{display:flex;gap:10px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:rgba(10,17,32,.7);backdrop-filter:blur(6px);padding:7px 14px;border-radius:999px;font:500 13px var(--mono);color:var(--mut)}
+.chip b{color:var(--ice);font-weight:600}
+.hero{padding:34px 0 26px}
+h1{font:700 clamp(30px,5.2vw,58px)/1.08 var(--disp);letter-spacing:-.02em;max-width:14ch}
+h1 span{background:linear-gradient(90deg,var(--ice),var(--plasma));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mut);max-width:52ch;margin-top:14px}
+main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;padding-bottom:60px;align-items:start}
+@media(max-width:920px){main{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:20px;position:relative}
+.card::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(135deg,rgba(111,243,255,.5),transparent 40%,rgba(176,107,255,.45));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+label.h{display:block;font:600 13px var(--mono);color:var(--mut);margin-bottom:8px}
+textarea{width:100%;min-height:130px;resize:vertical;background:#060b16;border:1px solid var(--line);border-radius:12px;color:var(--tx);padding:14px;font:400 13.5px/1.5 var(--mono)}
+textarea::placeholder{color:#43507a}
+.row{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap}
+.tog{display:flex;align-items:center;gap:9px;color:var(--mut);font-size:14px;cursor:pointer}
+.tog input{accent-color:var(--ice);width:16px;height:16px}
+.go{border:0;border-radius:12px;padding:13px 26px;font:700 14px var(--disp);color:#03121a;background:linear-gradient(90deg,var(--ice),#9d8bff);
+  box-shadow:0 0 24px rgba(111,243,255,.35);transition:transform .15s,box-shadow .15s}
+.go:hover{transform:translateY(-1px);box-shadow:0 0 34px rgba(111,243,255,.55)}
+.go:disabled{opacity:.5;cursor:wait;transform:none}
+.sec{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}
+.sec h2{font:700 15px var(--disp)}
+.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:13px;color:var(--mut)}
+.ghost:hover{border-color:var(--ice);color:var(--ice)}
+.empty{border:1px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--mut)}
+.job{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:14px 16px;margin-bottom:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+@media(max-width:600px){.job{grid-template-columns:56px 1fr}.job .act{grid-column:1/-1}}
+.ring{width:64px;height:64px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bg{stroke:#15213f}
+.ring .fg{stroke:var(--ice);stroke-linecap:round;transition:stroke-dashoffset .6s,stroke .3s}
+.ring .lbl{position:absolute;inset:0;display:grid;place-items:center;font:600 11px var(--mono);color:var(--mut)}
+.job.spin .ring svg{animation:rot 1.4s linear infinite}
+.job.ready .fg{stroke:var(--ok)}.job.failed .fg{stroke:var(--bad)}
+@keyframes rot{to{transform:rotate(270deg)}}
+.name{font-weight:700;word-break:break-all;line-height:1.35}
+.meta{font:400 12.5px var(--mono);color:var(--mut);margin-top:3px;display:flex;gap:6px 14px;flex-wrap:wrap}
+.st-ready{color:var(--ok)}.st-failed{color:var(--bad)}.st-go{color:var(--ice)}
+.act{display:flex;gap:8px}
+.dl{display:inline-block;text-decoration:none;background:var(--ok);color:#02150c;font-weight:700;padding:9px 16px;border-radius:10px;font-size:14px}
+.dl:hover{filter:brightness(1.1)}
+.side .search{width:100%;background:#060b16;border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:9px 12px;font:400 13px var(--mono);margin:8px 0 10px}
+.hosts{max-height:520px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.host{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:8px;font-size:14px}
+.host:hover{background:rgba(111,243,255,.05)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;background:#4a5678}
+.dot.up{background:var(--ok);box-shadow:0 0 8px var(--ok)}.dot.degraded{background:var(--warn)}.dot.down{background:var(--bad)}
+.host small{margin-left:auto;font:400 12px var(--mono);color:var(--mut)}
+.plus{font:600 10px var(--mono);color:var(--plasma);border:1px solid var(--plasma);border-radius:5px;padding:0 5px}
+#gate{position:fixed;inset:0;background:rgba(4,6,12,.94);backdrop-filter:blur(10px);display:none;place-items:center;z-index:9;padding:20px}
+#gate .card{max-width:380px;width:100%}
+#gate input:not([type=checkbox]){width:100%;background:#060b16;border:1px solid var(--line);border-radius:10px;color:var(--tx);padding:12px;font:400 15px var(--mono);margin:12px 0}
+#gate p.e{color:var(--bad);font-size:13px;min-height:20px;margin-bottom:8px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--ice);padding:10px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:10}
+#toast.on{opacity:1}
+footer{color:var(--mut);font-size:12.5px;padding:0 0 30px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="gate"><div class="card"><h2 style="font:700 17px var(--disp)">Hubungkan API Key</h2>
+  <p style="color:var(--mut);font-size:14px;margin-top:8px">Tempel API key DebridMaster Anda. Key dipakai hanya untuk memproses link Anda dan tidak disimpan di server.
+  Belum punya? <a href="https://debridmaster.com/app#api-keys" target="_blank" rel="noopener" style="color:var(--ice)">Buat di akun DebridMaster</a>.</p>
+  <input id="code" type="password" autocomplete="off" spellcheck="false" placeholder="dm_live_..." aria-label="API key DebridMaster">
+  <label class="tog" style="margin-bottom:10px"><input type="checkbox" id="remember"> Ingat di perangkat ini</label>
+  <p class="e" id="gerr" role="alert"></p><button class="go" id="gbtn" style="width:100%">Hubungkan</button></div></div>
+
+<div class="wrap">
+  <header>
+    <div class="logo"><i></i>NEXUS Leech</div>
+    <div class="acct" id="acct"><span class="chip">Memuat akun…</span></div>
+  </header>
+
+  <section class="hero">
+    <h1>Tempel link. <span>Ambil file.</span></h1>
+    <p>Ubah link file host premium menjadi tautan unduhan berkecepatan penuh dengan API key Anda sendiri. Satu link per baris, bisa banyak sekaligus.</p>
+  </section>
+
+  <main>
+    <div>
+      <div class="card">
+        <label class="h" for="links">Link premium</label>
+        <textarea id="links" placeholder="https://k2s.cc/file/abc123/film.mkv&#10;https://..." spellcheck="false"></textarea>
+        <div class="row">
+          <label class="tog"><input type="checkbox" id="free"> Pakai jatah gratis harian</label>
+          <button class="go" id="submit">Generate link</button>
+        </div>
+      </div>
+
+      <div class="sec"><h2>Unduhan</h2><div><button class="ghost" id="hist">Muat riwayat</button> <button class="ghost" id="clear">Bersihkan</button></div></div>
+      <div id="jobs"><div class="empty">Belum ada unduhan. Tempel link di atas untuk mulai.</div></div>
+    </div>
+
+    <aside class="card side">
+      <h2 style="font:700 15px var(--disp)">Status host</h2>
+      <input class="search" id="hq" placeholder="Cari host…" aria-label="Cari host">
+      <div class="hosts" id="hosts"></div>
+    </aside>
+  </main>
+  <footer>Link unduhan berlaku sementara dan mendukung resume. Gunakan hanya untuk file yang berhak Anda unduh.</footer>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const store = {
+  get: k => { try { return localStorage.getItem(k) || sessionStorage.getItem(k) || ''; } catch { return ''; } },
+  set: (k, v, keep) => { try { (keep ? localStorage : sessionStorage).setItem(k, v); } catch {} },
+  del: k => { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch {} }
+};
+let key = store.get('dmkey');
+const KEYRE = /^dm_live_[A-Za-z0-9]{16,128}$/;
+let hosts = [], jobs = [];
+const ERR = {
+  file_not_found:'File tidak ditemukan atau link sudah mati.', host_unavailable:'Host sedang tidak tersedia. Coba lagi nanti.',
+  insufficient_funds:'Saldo tidak cukup. Isi ulang saldo DebridMaster.', daily_limit_reached:'Batas harian host ini tercapai.',
+  resolve_failed:'Gagal membaca link. Periksa kembali URL-nya.', fetch_failed:'Gagal mengambil file dari host.', verify_failed:'Verifikasi file gagal.',
+  free_vpn:'Jatah gratis tidak bisa dipakai lewat VPN/proxy.', free_disabled:'Jatah gratis sedang dinonaktifkan.', free_email_not_allowed:'Akun ini tidak boleh memakai jatah gratis.'
+};
+const STAT = { sending:'Mengirim', queued:'Antre', fetching:'Mengambil file', ready:'Siap diunduh', failed:'Gagal' };
+const PCT = { sending:8, queued:20, fetching:60, ready:100, failed:100 };
+
+const toast = t => { const e = $('#toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2600); };
+const bytes = n => { if (n == null) return '—'; const u = ['B','KB','MB','GB','TB']; let i = 0; while (n >= 1024 && i < 4) { n /= 1024; i++; } return n.toFixed(i ? 2 : 0) + ' ' + u[i]; };
+
+async function api(p, opts = {}) {
+  const r = await fetch('/api' + p, { ...opts, headers: { 'Content-Type': 'application/json', 'x-dm-key': key } });
+  let j = null; try { j = await r.json(); } catch {}
+  if (!r.ok) { const e = new Error(j?.error?.message || 'Terjadi kesalahan (' + r.status + ')'); e.status = r.status; e.code = j?.error?.code; e.retry = +r.headers.get('retry-after') || 0; throw e; }
+  return j;
+}
+
+/* ---------- akses (API key manual) ---------- */
+function showGate(msg = '') { $('#gate').style.display = 'grid'; $('#gerr').textContent = msg; $('#code').focus(); }
+async function connect() {
+  const k = $('#code').value.trim();
+  if (!KEYRE.test(k)) return $('#gerr').textContent = 'Format key tidak dikenali. Key diawali dm_live_ lalu huruf/angka.';
+  key = k; $('#gbtn').disabled = true; $('#gerr').textContent = '';
+  try { await loadAccount(true); store.set('dmkey', k, $('#remember').checked); $('#gate').style.display = 'none'; $('#code').value = ''; }
+  catch (e) { key = ''; $('#gerr').textContent = e.status === 401 ? 'Key ditolak oleh DebridMaster. Periksa lagi atau buat key baru.' : e.message; }
+  $('#gbtn').disabled = false;
+}
+function logout() {
+  store.del('dmkey'); key = ''; jobs = []; $('#acct').innerHTML = '';
+  $('#jobs').innerHTML = '<div class="empty">Belum ada unduhan. Tempel link di atas untuk mulai.</div>'; showGate();
+}
+$('#gbtn').onclick = connect; $('#code').onkeydown = e => e.key === 'Enter' && connect();
+$('#acct').addEventListener('click', e => { if (e.target.closest('#logout')) logout(); });
+
+async function loadAccount(strict) {
+  try {
+    const a = await api('/account'); const c = [];
+    c.push(`<span class="chip">Key <b>${esc(key.slice(0, 8))}…${esc(key.slice(-4))}</b></span>`);
+    c.push(`<span class="chip">Saldo <b>$${(a.wallet_balance_micros / 1e6).toFixed(2)}</b></span>`);
+    c.push(`<span class="chip">Paket <b>${esc(a.plan)}</b></span>`);
+    if (a.quota) c.push(`<span class="chip">Sisa kuota <b>${bytes(a.quota.remaining_bytes)}</b></span>`);
+    c.push('<button class="ghost" id="logout">Ganti key</button>');
+    $('#acct').innerHTML = c.join('');
+  } catch (e) {
+    if (strict) throw e;
+    if (e.status === 401) { key = ''; store.del('dmkey'); showGate('Sesi key berakhir. Tempel key lagi.'); }
+  }
+}
+async function loadHosts() {
+  try { hosts = await api('/hosts'); drawHosts(); } catch { $('#hosts').innerHTML = '<div class="empty">Gagal memuat host.</div>'; }
+}
+function drawHosts() {
+  const q = $('#hq').value.toLowerCase();
+  const list = hosts.filter(h => (h.name + h.slug + (h.domains || []).join(' ')).toLowerCase().includes(q))
+    .sort((a, b) => ({up:0,degraded:1,unknown:2,down:3}[a.status] - {up:0,degraded:1,unknown:2,down:3}[b.status]));
+  $('#hosts').innerHTML = list.map(h => `<div class="host" title="${esc((h.domains || []).join(', '))}">
+    <span class="dot ${esc(h.status)}"></span><span>${esc(h.name)}</span>${h.class === 'plus' ? '<span class="plus">PLUS</span>' : ''}
+    <small>${h.success_rate_7d != null ? Math.round(h.success_rate_7d * 100) + '%' : esc(h.status)}</small></div>`).join('') || '<div class="empty">Tidak ada hasil.</div>';
+}
+$('#hq').oninput = drawHosts;
+function hostFor(link) {
+  let d; try { d = new URL(link).hostname.replace(/^www\./, ''); } catch { return null; }
+  return hosts.find(h => (h.domains || []).some(x => d === x || d.endsWith('.' + x)));
+}
+
+/* ---------- tampilan unduhan ---------- */
+function draw(j) {
+  let el = document.getElementById('j-' + j.key);
+  if (!el) { $('#jobs .empty')?.remove(); el = document.createElement('div'); el.id = 'j-' + j.key; $('#jobs').prepend(el); }
+  const st = j.status, R = 27, C = 2 * Math.PI * R, pct = PCT[st] ?? 20;
+  const waiting = st === 'ready' && !j.delivery_url;
+  const cls = st === 'ready' && !waiting ? 'ready' : st === 'failed' ? 'failed' : 'spin';
+  const label = waiting ? 'Menunggu jatah gratis' : STAT[st] || st;
+  const name = j.filename || j.link;
+  const sub = [`<span class="${st === 'ready' ? 'st-ready' : st === 'failed' ? 'st-failed' : 'st-go'}">${esc(label)}</span>`];
+  if (j.host) sub.push(esc(j.host));
+  if (j.size_bytes != null) sub.push(bytes(j.size_bytes));
+  if (j.expires_at && st === 'ready') sub.push(`sisa <span data-exp="${esc(j.expires_at)}"></span>`);
+  if (waiting && j.available_at) sub.push('tersedia ' + new Date(j.available_at).toLocaleTimeString('id-ID'));
+  if (j.mirror_status === 'uploading') sub.push('mirror ' + esc(j.mirror_provider || '') + '…');
+  if (st === 'failed') sub.push(esc(j.msg || ERR[j.error_code] || j.error_message || 'Gagal.'));
+  el.className = 'job ' + cls;
+  el.innerHTML = `<div class="ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="${R}"/>
+    <circle class="fg" cx="32" cy="32" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - (cls === 'spin' ? .28 : 1))}"/></svg>
+    <div class="lbl">${cls === 'ready' ? '✓' : cls === 'failed' ? '!' : pct + '%'}</div></div>
+    <div><div class="name">${esc(name)}</div><div class="meta">${sub.join('<span>·</span>')}</div></div>
+    <div class="act">${st === 'ready' && j.delivery_url ? `<a class="dl" href="${esc(j.delivery_url)}" target="_blank" rel="noopener">Download</a><button class="ghost" data-copy="${esc(j.delivery_url)}">Salin</button>` : ''}</div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  navigator.clipboard.writeText(b.dataset.copy).then(() => toast('Link unduhan disalin'), () => toast('Gagal menyalin'));
+});
+setInterval(() => document.querySelectorAll('[data-exp]').forEach(s => {
+  const ms = new Date(s.dataset.exp) - Date.now();
+  if (ms <= 0) return s.textContent = 'kedaluwarsa';
+  const h = Math.floor(ms / 36e5), m = Math.floor(ms % 36e5 / 6e4);
+  s.textContent = h + 'j ' + m + 'm';
+}), 1000);
+
+/* ---------- alur unduhan ---------- */
+let seq = 0;
+async function track(j) {
+  const t0 = Date.now(); let errs = 0;
+  while (true) {
+    const done = j.status === 'failed' || (j.status === 'ready' && j.delivery_url);
+    if (done) break;
+    await sleep(j.status === 'ready' ? 8000 : Date.now() - t0 < 30000 ? 2500 : 7000);
+    try { Object.assign(j, await api('/unrestrict/' + j.id)); errs = 0; }
+    catch (e) { if (++errs >= 5 || e.status === 404 || e.status === 403) { j.status = 'failed'; j.msg = e.message; } }
+    draw(j);
+  }
+  draw(j); loadAccount();
+}
+async function submitOne(j, free) {
+  for (let i = 0; i < 4; i++) {
+    try { Object.assign(j, await api('/unrestrict', { method: 'POST', body: JSON.stringify({ link: j.link, free }) })); return true; }
+    catch (e) {
+      if (e.status === 429 && i < 3) { j.msg = 'Menunggu antrean…'; draw(j); await sleep(Math.max(e.retry, 5) * 1000 * (i + 1)); continue; }
+      if (e.status === 401) { key = ''; store.del('dmkey'); showGate('Key ditolak. Tempel key yang valid.'); }
+      j.status = 'failed';
+      j.msg = e.status === 401 ? 'API key tidak valid.' : e.status === 402 ? ERR.insufficient_funds : ERR[e.code] || (e.status === 422 ? 'Host belum didukung. Lihat daftar host.' : e.message);
+      return false;
+    }
+  }
+}
+async function run() {
+  if (!key) return showGate();
+  const links = [...new Set($('#links').value.split(/\s+/).filter(l => /^https?:\/\//i.test(l)))];
+  if (!links.length) return toast('Tempel minimal satu link (http/https).');
+  const free = $('#free').checked, btn = $('#submit'); btn.disabled = true; $('#links').value = '';
+  for (const link of links) {
+    const j = { key: ++seq, link, status: 'sending' }; jobs.push(j);
+    if (hosts.length && !hostFor(link)) { j.status = 'failed'; j.msg = 'Host belum didukung. Lihat daftar host di samping.'; draw(j); continue; }
+    draw(j);
+    if (await submitOne(j, free)) { draw(j); track(j); } else draw(j);
+    await sleep(700);
+  }
+  btn.disabled = false;
+}
+$('#submit').onclick = run;
+$('#clear').onclick = () => { $('#jobs').innerHTML = '<div class="empty">Belum ada unduhan. Tempel link di atas untuk mulai.</div>'; jobs = []; };
+$('#hist').onclick = async () => {
+  try {
+    const h = await api('/history');
+    if (!h.items.length) return toast('Riwayat kosong.');
+    h.items.slice().reverse().forEach(it => { const j = { ...it, key: 'h' + it.id }; if (!document.getElementById('j-' + j.key)) { draw(j); if (j.status !== 'ready' && j.status !== 'failed') track(j); } });
+  } catch (e) { toast(e.message); }
+};
+
+async function boot() {
+  loadHosts(); setInterval(loadHosts, 5 * 60 * 1000);
+  if (!key) return showGate();
+  try { await loadAccount(true); } catch { key = ''; store.del('dmkey'); showGate('Key tersimpan tidak valid. Tempel key lagi.'); }
+}
+boot();
+</script>
+</body>
+</html>
